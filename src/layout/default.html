@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- head 中 -->
+    <link rel="stylesheet" href="css/materialize.min.css">
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+    <div style="margin-left: 10px;margin-right: 10px">
+
+    </div>
+
+    <div>
+        <div class="card-panel">应用
+        <p>
+            <label>
+                <input name="radio" class="with-gap" type="radio"  id="dyjs"  />
+                <span>抖音极速版</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input name="radio" class="with-gap" type="radio" id="ksjs"/>
+                <span>快手极速版</span>
+            </label>
+        </p>
+
+    </div>
+    <div class="col s12">
+        视频观看时长:
+        <div class="input-field inline">
+            <input type="text" class="validate" style="width: 50px" id="swiptimeefrom"   />
+
+        </div>
+        <span>（秒）到</span>
+        <div class="input-field inline">
+            <input type="text" class="validate" style="width: 50px" id="swiptimeeto"  />
+
+        </div>
+        <span>（秒）</span>
+    </div>
+    <div class="col s12">
+        滑动次数:
+        <div class="input-field inline">
+            <input type="text" class="validate" style="width: 50px" id="swipecount"   />
+
+        </div>（次）
+
+    </div>
+    <div class="row">
+
+        <div class="col s6">
+            <button class="btn waves-effect waves-light " type="button" name="action" onclick="javascript:save()">启动脚本
+            </button>
+        </div>
+        <div class="col s6">
+            <button class="btn waves-effect waves-light" type="button" name="action" onclick="window.ec.stopTask()">
+                停止脚本
+            </button>
+        </div>
+    </div>
+    <script src="htmljs/jquery.min.js"></script>
+    <script src="htmljs/materialize.min.js"></script>
+</body>
+
+
+
+    <script>
+    $(function () {
+
+        var swiptimeefrom = window.ec.getConfig("swiptimeefrom");
+         $("#swiptimeefrom").val(swiptimeefrom);
+         var e_swiptimeefrom= $("#swiptimeefrom").val();
+
+if(swiptimeefrom==""){
+ $("#swiptimeefrom").val(10);
+}
+
+        var swiptimeeto = window.ec.getConfig("swiptimeeto");
+        $("#swiptimeeto").val(swiptimeeto);
+        var e_swiptimeeto= $("#swiptimeeto").val();
+
+if(e_swiptimeeto==""){
+ $("#swiptimeeto").val(20);
+}
+
+        var swipecount = window.ec.getConfig("swipecount");
+        $("#swipecount").val(swipecount);
+         var e_swipecount= $("#swipecount").val();
+  if(e_swipecount==""){
+ $("#swipecount").val(100);
+}
+
+    var dyjs = window.ec.getConfig("dyjs");
+        if (dyjs === "true") {
+            $("#dyjs").attr("checked", "checked");
+        }else{
+              $("#ksjs").attr("checked", "checked");
+        }
+
+
+    });
+
+
+    //保存参数的函数
+    function save() {
+        var swiptimeefrom = $("#swiptimeefrom").val();
+        window.ec.saveConfig("swiptimeefrom", swiptimeefrom);
+
+        var swiptimeeto = $("#swiptimeeto").val();
+        window.ec.saveConfig("swiptimeeto", swiptimeeto);
+
+         var swipecount = $("#swipecount").val();
+        window.ec.saveConfig("swipecount", swipecount);
+
+        window.ec.saveConfig("dyjs", $("#dyjs").prop("checked"));
+
+       // alert(window.ec.getConfig("dyjs"));
+
+        window.ec.toast("开始启动");
+        window.ec.start();
+
+    }
+
+</script>
+
+</html>
